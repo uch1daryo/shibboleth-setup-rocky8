@@ -1,0 +1,8 @@
+---
+- hosts: idpserver
+  gather_facts: no
+  roles:
+    - common
+    - webtier
+    - letsencrypt
+    - idp

@@ -1,0 +1,41 @@
+---
+jetty_dist_ver: 9.4.49.v20220914
+jetty_base_ver: 9.4.1-20220208.135650-767
+shibbo_idp_ver: 4.2.1
+
+idp_scope: example.com
+idp_keystore_pass: backpass
+idp_sealer_pass: cookiepass
+
+ldap_url: ldap://ldap.example.com
+ldap_start_tls: false
+ldap_base_dn: dc=example,dc=com
+ldap_subtree_search: true
+ldap_bind_dn: cn=admin,dc=example,dc=com
+ldap_bind_dn_password: secret
+
+idp_display_name_ja: アイデンティティプロバイダー表示名
+idp_display_name_en: Identity Provider Display Name
+
+idp_logo_url: https://{{ idp_host_name }}/logo/logo.png
+
+idp_info_url_ja: https://{{ idp_host_name }}/ja/
+idp_info_url_en: https://{{ idp_host_name }}/en/
+
+idp_privacy_url_ja: https://{{ idp_host_name }}/ja/privacy
+idp_privacy_url_en: https://{{ idp_host_name }}/en/privacy
+
+idp_ip_hint: IPヒント
+idp_domain_hint: ドメインヒント
+
+idp_organization_name_ja: アイデンティティプロバイダー組織
+idp_organization_name_en: Identity Provider Organization
+
+idp_organization_display_name_ja: アイデンティティプロバイダー組織表示名
+idp_organization_display_name_en: Identity Provider Organization Display Name
+
+idp_organization_url: https://{{ idp_host_name }}/
+
+idp_contact_person_given_name: 名
+idp_contact_person_sur_name: 姓
+idp_contact_person_email_address: メールアドレス

@@ -1,0 +1,5 @@
+[idpserver]
+idp.example.com
+
+[spserver]
+sp.example.com

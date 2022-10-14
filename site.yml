@@ -1,0 +1,3 @@
+---
+- import_playbook: idpserver.yml
+- import_playbook: spserver.yml

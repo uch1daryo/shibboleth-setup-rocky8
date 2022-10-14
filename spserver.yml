@@ -1,0 +1,8 @@
+---
+- hosts: spserver
+  gather_facts: no
+  roles:
+    - common
+    - webtier
+    - letsencrypt
+    - sp

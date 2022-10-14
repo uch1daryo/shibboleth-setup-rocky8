@@ -1,0 +1,24 @@
+---
+sp_support_contact: 管理者メールアドレス
+
+sp_display_name_ja: サービスプロバイダー表示名
+sp_display_name_en: Service Provider Display Name
+
+sp_description: サービスの説明
+
+sp_logo_url: https://{{ sp_host_name }}/logo/logo.png
+
+sp_info_url_ja: https://{{ sp_host_name }}/ja/
+sp_info_url_en: https://{{ sp_host_name }}/en/
+
+sp_organization_name_ja: サービスプロバイダー組織
+sp_organization_name_en: Service Provider Organization
+
+sp_organization_display_name_ja: サービスプロバイダー組織表示名
+sp_organization_display_name_en: Service Provider Organization Display Name
+
+sp_organization_url: https://{{ sp_host_name }}/
+
+sp_contact_person_given_name: 名
+sp_contact_person_sur_name: 姓
+sp_contact_person_email_address: メールアドレス

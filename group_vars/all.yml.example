@@ -1,0 +1,15 @@
+---
+ansible_ssh_user: rocky
+ansible_become: yes
+
+idp_host_name: idp.example.com
+idp_entity_id: https://idp.example.com/idp/shibboleth
+
+sp_host_name: sp.example.com
+sp_entity_id: https://sp.example.com/shibboleth-sp
+
+pki_tls_dir: /etc/letsencrypt/live
+pki_tls_key_file: privkey.pem
+pki_tls_crt_file: fullchain.pem
+
+letsencrypt_email: user@example.com

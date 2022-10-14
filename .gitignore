@@ -1,0 +1,4 @@
+hosts
+group_vars/all.yml
+group_vars/idpserver.yml
+group_vars/spserver.yml
