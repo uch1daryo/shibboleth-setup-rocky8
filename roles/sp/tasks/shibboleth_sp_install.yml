@@ -1,0 +1,28 @@
+---
+- name: copy shibboleth.repo
+  copy:
+    src: files/shibboleth.repo
+    dest: /etc/yum.repos.d/
+    owner: root
+    group: root
+    mode: '0644'
+
+- name: get stats of /etc/yum.repos.d/shibboleth.repo
+  stat:
+    path: /etc/yum.repos.d/shibboleth.repo
+  register: shibboleth_repo
+
+- name: install shibboleth
+  dnf:
+    name: shibboleth
+  when: shibboleth_repo.stat.exists
+
+- name: gather package facts
+  package_facts:
+
+- name: start and enable shibd
+  service:
+    name: shibd
+    state: started
+    enabled: yes
+  when: "'shibboleth' in ansible_facts.packages"

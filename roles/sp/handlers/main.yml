@@ -1,0 +1,14 @@
+---
+- name: restart shibd
+  service:
+    name: shibd
+    state: restarted
+  listen: "restart shibd"
+  when: "'shibboleth' in ansible_facts.packages"
+
+- name: reload httpd
+  service:
+    name: httpd
+    state: reloaded
+  listen: "reload httpd"
+  when: "'httpd' in ansible_facts.packages"

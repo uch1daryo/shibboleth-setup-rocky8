@@ -1,0 +1,26 @@
+---
+- name: template to /etc/shibboleth/shibboleth2.xml
+  template:
+    src: templates/shibboleth2.xml.j2
+    dest: /etc/shibboleth/shibboleth2.xml
+    owner: root
+    group: root
+    mode: '0644'
+  notify: "restart shibd"
+
+- name: get stats of /var/www/html/sp-metadata.xml
+  stat:
+    path: /var/www/html/sp-metadata.xml
+  register: sp_metadata
+
+- name: template to /var/www/html/sp-metadata.xml
+  template:
+    src: templates/sp-metadata.xml.j2
+    dest: /var/www/html/sp-metadata.xml
+    owner: root
+    group: root
+    mode: '0644'
+  when: not sp_metadata.stat.exists
+
+- name: gather package facts
+  package_facts:

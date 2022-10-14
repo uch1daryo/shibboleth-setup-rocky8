@@ -1,0 +1,50 @@
+<!-- SP: Your Organization Name, Your SP Site URL, Date -->
+<EntityDescriptor xmlns="urn:oasis:names:tc:SAML:2.0:metadata"  entityID="{{ sp_entity_id }}">
+  <SPSSODescriptor protocolSupportEnumeration="urn:oasis:names:tc:SAML:2.0:protocol urn:oasis:names:tc:SAML:1.1:protocol">
+    <Extensions>
+      <idpdisc:DiscoveryResponse xmlns:idpdisc="urn:oasis:names:tc:SAML:profiles:SSO:idp-discovery-protocol" Location="https://{{ sp_host_name }}/Shibboleth.sso/DS" index="1" Binding="urn:oasis:names:tc:SAML:profiles:SSO:idp-discovery-protocol"/>
+      <mdui:UIInfo xmlns:mdui="urn:oasis:names:tc:SAML:metadata:ui">
+        <mdui:DisplayName xml:lang="ja">{{ sp_display_name_ja }}</mdui:DisplayName>
+        <mdui:DisplayName xml:lang="en">{{ sp_display_name_en }}</mdui:DisplayName>
+        <mdui:Description xml:lang="ja">{{ sp_description }}</mdui:Description>
+        <mdui:Logo height="50" width="50">{{ sp_logo_url }}</mdui:Logo>
+        <mdui:InformationURL xml:lang="ja">{{ sp_info_url_ja }}</mdui:InformationURL>
+        <mdui:InformationURL xml:lang="en">{{ sp_info_url_en }}</mdui:InformationURL>
+      </mdui:UIInfo>
+    </Extensions>
+    <KeyDescriptor>
+      <ds:KeyInfo xmlns:ds="http://www.w3.org/2000/09/xmldsig#">
+        <ds:X509Data>
+          <ds:X509Certificate>
+MIIFITCCBAmgAwIBAgIIBpAaVBrt6kMwDQYJKoZIhvcNAQEFBQAwfTELMAkGA1UE
+BhMCSlAxETAPBgNVBAcTCEFjYWRlbWUyMSowKAYDVQQKEyFOYXRpb25hbCBJbnN0
+aXR1dGUgb2YgSW5mb3JtYXRpY3MxDTALBgNVBAsTBFVQS0kxIDAeBgNVBAsTF05J
+                     *******************
+                     *******************
+                     *******************
+kBFfvNBdrux4CkIsKhpYQXCAIEuy12CFZUXEtHB5XxeBkntbs2lfP/rWbg2J1Ige
+zZc6shCn3VdrL2douVFjaAXlc8zwys/KIpLzNSxOOGwJdKxFTaIzH/emcqKj93Jd
+DC1rrFMhoPE=
+          </ds:X509Certificate>
+        </ds:X509Data>
+      </ds:KeyInfo>
+    </KeyDescriptor>
+    <AssertionConsumerService isDefault="true" Location="https://{{ sp_host_name }}/Shibboleth.sso/SAML2/POST" index="1" Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST"/>
+    <AssertionConsumerService Location="https://{{ sp_host_name }}/Shibboleth.sso/SAML2/POST-SimpleSign" index="2" Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST-SimpleSign"/>
+    <AssertionConsumerService Location="https://{{ sp_host_name }}/Shibboleth.sso/SAML2/Artifact" index="3" Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Artifact"/>
+    <AssertionConsumerService Location="https://{{ sp_host_name }}/Shibboleth.sso/SAML/POST" index="4" Binding="urn:oasis:names:tc:SAML:1.0:profiles:browser-post"/>
+    <AssertionConsumerService Location="https://{{ sp_host_name }}/Shibboleth.sso/SAML/Artifact" index="5" Binding="urn:oasis:names:tc:SAML:1.0:profiles:artifact-01"/>
+  </SPSSODescriptor>
+  <Organization>
+    <OrganizationName xml:lang="en">{{ sp_organization_name_en }}</OrganizationName>
+    <OrganizationName xml:lang="ja">{{ sp_organization_name_ja }}</OrganizationName>
+    <OrganizationDisplayName xml:lang="en">{{ sp_organization_display_name_en }}</OrganizationDisplayName>
+    <OrganizationDisplayName xml:lang="ja">{{ sp_organization_display_name_ja }}</OrganizationDisplayName>
+    <OrganizationURL xml:lang="en">{{ sp_organization_url }}</OrganizationURL>
+  </Organization>
+  <ContactPerson contactType="technical">
+    <GivenName>{{ sp_contact_person_given_name }}</GivenName>
+    <SurName>{{ sp_contact_person_sur_name }}</SurName>
+    <EmailAddress>{{ sp_contact_person_email_address }}</EmailAddress>
+  </ContactPerson>
+</EntityDescriptor>

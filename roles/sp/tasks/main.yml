@@ -1,0 +1,4 @@
+---
+- include_tasks: letsencrypt_configure.yml
+- include_tasks: shibboleth_sp_install.yml
+- include_tasks: shibboleth_sp_configure.yml
