@@ -1,0 +1,69 @@
+---
+- name: install httpd and mod_ssl
+  dnf:
+    name:
+      - httpd
+      - mod_ssl
+    state: latest
+
+- name: gather package facts
+  package_facts:
+
+- name: get stats of httpd.conf.dist
+  stat:
+    path: /etc/httpd/conf/httpd.conf.dist
+  register: httpd_conf_dist
+
+- name: backup original httpd.conf
+  copy:
+    src: /etc/httpd/conf/httpd.conf
+    dest: /etc/httpd/conf/httpd.conf.dist
+    owner: root
+    group: root
+    mode: '0444'
+    backup: yes
+    remote_src: yes
+  when:
+    - "'httpd' in ansible_facts.packages"
+    - not httpd_conf_dist.stat.exists
+
+- name: get stats of ssl.conf.dist
+  stat:
+    path: /etc/httpd/conf.d/ssl.conf.dist
+  register: ssl_conf_dist
+
+- name: backup original ssl.conf
+  copy:
+    src: /etc/httpd/conf.d/ssl.conf
+    dest: /etc/httpd/conf.d/ssl.conf.dist
+    owner: root
+    group: root
+    mode: '0444'
+    backup: yes
+    remote_src: yes
+  when:
+    - "'mod_ssl' in ansible_facts.packages"
+    - not ssl_conf_dist.stat.exists
+
+- name: start and enable httpd
+  service:
+    name: httpd
+    state: started
+    enabled: yes
+  when: "'httpd' in ansible_facts.packages"
+
+- name: open port http
+  firewalld:
+    zone: public
+    service: http
+    permanent: yes
+    immediate: yes
+    state: enabled
+
+- name: open port https
+  firewalld:
+    zone: public
+    service: https
+    permanent: yes
+    immediate: yes
+    state: enabled
