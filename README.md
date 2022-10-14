@@ -49,3 +49,5 @@ ansible-playbook -i hosts site.yml
 
 - [IdPメタデータテンプレート](https://meatwiki.nii.ac.jp/confluence/pages/viewpage.action?pageId=12158233)
 - [SPメタデータテンプレート](https://meatwiki.nii.ac.jp/confluence/pages/viewpage.action?pageId=12158235)
+
+- [certbot instructions - Apache on CentOS 8](https://certbot.eff.org/instructions?ws=apache&os=centosrhel8)
