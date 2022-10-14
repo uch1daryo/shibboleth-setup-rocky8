@@ -1,0 +1,4 @@
+---
+- name: reboot server
+  reboot:
+  listen: "reboot server"

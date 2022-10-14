@@ -1,0 +1,28 @@
+---
+- name: disable SELinux
+  selinux:
+    state: disabled
+  notify: "reboot server"
+
+- name: set timezone
+  timezone:
+    name: Asia/Tokyo
+
+- name: install required packages
+  dnf:
+    name:
+      - epel-release
+      - vim-enhanced
+      - wget
+    state: latest
+
+- name: gather package facts
+  package_facts:
+
+- name: install required packages (EPEL)
+  dnf:
+    name:
+      - snapd
+      - htop
+    state: latest
+  when: "'epel-release' in ansible_facts.packages"
