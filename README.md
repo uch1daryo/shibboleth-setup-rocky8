@@ -37,6 +37,49 @@ run!!
 ansible-playbook -i hosts site.yml
 ```
 
+## Configuration
+
+### update metadata
+
+insert self-signed certificate in sp-metadata.xml on SP server.
+
+```bash
+cat /etc/shibboleth/sp-cert.pem
+sudo vim /var/www/html/sp-metadata.xml
+```
+
+IdP server as well.
+
+### share metadata and restart service
+
+download idp-metadata.xml as partner-metadata.xml on SP server, restart service.
+
+```bash
+cd /etc/shibboleth/
+sudo wget -O partner-metadata.xml https://idp.example.com/idp-metadata.xml
+sudo systemctl restart shibd.service
+```
+
+IdP server as well.
+
+```bash
+cd /opt/shibboleth-idp/metadata/
+sudo wget -O partner-metadata.xml https://sp.example.com/sp-metadata.xml
+sudo systemctl restart jetty.service
+```
+
+## Test
+
+create test content on SP server.
+
+```bash
+cd /var/www/html/
+sudo mkdir secure
+sudo vim secure/index.html
+```
+
+access `https://sp.example.com/secure/` and authenticate.
+
 ## Credit
 
 - [貴学にてIdPv4をインストールする場合の構築手順](https://meatwiki.nii.ac.jp/confluence/pages/viewpage.action?pageId=20021624)
