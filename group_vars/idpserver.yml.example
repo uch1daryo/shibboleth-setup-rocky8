@@ -11,9 +11,9 @@ idp_keystore_pass: backpass
 idp_sealer_pass: cookiepass
 
 ldap_url: ldap://ldap.example.com
-ldap_start_tls: false
+ldap_start_tls: "false"
 ldap_base_dn: dc=example,dc=com
-ldap_subtree_search: true
+ldap_subtree_search: "true"
 ldap_bind_dn: cn=admin,dc=example,dc=com
 ldap_bind_dn_password: secret
 
