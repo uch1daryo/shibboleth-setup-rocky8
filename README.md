@@ -94,3 +94,5 @@ access `https://sp.example.com/secure/` and authenticate.
 - [SPメタデータテンプレート](https://meatwiki.nii.ac.jp/confluence/pages/viewpage.action?pageId=12158235)
 
 - [certbot instructions - Apache on CentOS 8](https://certbot.eff.org/instructions?ws=apache&os=centosrhel8)
+
+- [Service Provider 3 / General Topics / keygen](https://shibboleth.atlassian.net/wiki/spaces/SP3/pages/2067398706/keygen)

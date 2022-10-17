@@ -8,6 +8,15 @@
     mode: '0644'
   notify: "restart shibd"
 
+- name: get stats of /etc/shibboleth/sp-cert.pem
+  stat:
+    path: /etc/shibboleth/sp-cert.pem
+  register: sp_cert_pem
+
+- name: generate shibboleth keys
+  shell: /etc/shibboleth/keygen.sh -o /etc/shibboleth/ -u shibd -g shibd -h {{ sp_host_name }} -y 10 -e {{ sp_entity_id }} -n sp
+  when: not sp_cert_pem.stat.exists
+
 - name: get stats of /var/www/html/sp-metadata.xml
   stat:
     path: /var/www/html/sp-metadata.xml
