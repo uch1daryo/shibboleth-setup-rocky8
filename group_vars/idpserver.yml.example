@@ -1,7 +1,10 @@
 ---
 jetty_dist_ver: 9.4.49.v20220914
+jetty_dist_md5: d8612baecd6964dbf09d01b290799c06
 jetty_base_ver: 9.4.1-20220208.135650-767
+jetty_base_md5: daabfd3c55c1af15054d6be18cb6c0db
 shibbo_idp_ver: 4.2.1
+shibbo_idp_sha: fa5e46d160f6b1bc50326c1a31627a05b5d0847b8f620d7f4c0251999b806474
 
 idp_scope: example.com
 idp_keystore_pass: backpass
