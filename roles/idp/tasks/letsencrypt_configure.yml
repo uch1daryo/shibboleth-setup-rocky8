@@ -1,0 +1,32 @@
+---
+- name: gather package facts
+  package_facts:
+
+- name: template to /etc/httpd/conf/httpd.conf
+  template:
+    src: templates/httpd.conf.j2
+    dest: /etc/httpd/conf/httpd.conf
+    owner: root
+    group: root
+    mode: '0644'
+  when: "'httpd' in ansible_facts.packages"
+  notify: "reload httpd"
+
+- name: get stats of /etc/letsencrypt/live/{{ idp_host_name }}
+  stat:
+    path: /etc/letsencrypt/live/{{ idp_host_name }}
+  register: pki_tls_sp
+
+- name: get certificate
+  shell: sudo certbot certonly --apache --agree-tos -m {{ letsencrypt_email }} -d {{ idp_host_name }} -n
+  when: not pki_tls_sp.stat.exists
+
+- name: template to /etc/httpd/conf.d/ssl.conf
+  template:
+    src: templates/ssl.conf.j2
+    dest: /etc/httpd/conf.d/ssl.conf
+    owner: root
+    group: root
+    mode: '0644'
+  when: "'mod_ssl' in ansible_facts.packages"
+  notify: "reload httpd"

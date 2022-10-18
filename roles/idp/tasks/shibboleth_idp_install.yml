@@ -1,0 +1,298 @@
+---
+- name: install java-11-openjdk-headless
+  dnf:
+    name: java-11-openjdk-headless
+
+- name: uninstall java-1.8.0-openjdk-headless
+  dnf:
+    name: java-1.8.0-openjdk-headless
+    state: absent
+    autoremove: no
+
+- name: download jetty-distribution-{{ jetty_dist_ver }}.tar.gz
+  get_url:
+    url: https://repo1.maven.org/maven2/org/eclipse/jetty/jetty-distribution/{{ jetty_dist_ver }}/jetty-distribution-{{ jetty_dist_ver }}.tar.gz
+    dest: /root/
+    checksum: md5:{{ jetty_dist_md5 }}
+
+- name: get stats of /root/jetty-distribution-{{ jetty_dist_ver }}.tar.gz
+  stat:
+    path: /root/jetty-distribution-{{ jetty_dist_ver }}.tar.gz
+  register: jetty_distribution_tar_gz
+
+- name: get stats of /opt/jetty-distribution-{{ jetty_dist_ver }}
+  stat:
+    path: /opt/jetty-distribution-{{ jetty_dist_ver }}
+  register: jetty_distribution
+
+- name: unarchive jetty-distribution files
+  unarchive:
+    src: /root/jetty-distribution-{{ jetty_dist_ver }}.tar.gz
+    dest: /opt/
+    owner: root
+    group: root
+    remote_src: yes
+  when:
+    - jetty_distribution_tar_gz.stat.exists
+    - not jetty_distribution.stat.exists
+
+- name: wait until /opt/jetty-distribution-{{ jetty_dist_ver }} is present before continuing
+  wait_for:
+    path: /opt/jetty-distribution-{{ jetty_dist_ver }}
+
+- name: create symbolic link to /opt/jetty-distribution-{{ jetty_dist_ver }}
+  file:
+    src: /opt/jetty-distribution-{{ jetty_dist_ver }}
+    dest: /opt/jetty
+    owner: root
+    group: root
+    state: link
+  when: jetty_distribution.stat.exists
+
+- name: download idp-jetty-base-{{ jetty_base_ver }}.tar.gz
+  get_url:
+    url: https://build.shibboleth.net/maven/snapshots/net/shibboleth/idp/idp-jetty-base/9.4.1-SNAPSHOT/idp-jetty-base-{{ jetty_base_ver }}.tar.gz
+    dest: /root/
+    checksum: md5:{{ jetty_base_md5 }}
+
+- name: get stats of /root/idp-jetty-base-{{ jetty_base_ver }}.tar.gz
+  stat:
+    path: /root/idp-jetty-base-{{ jetty_base_ver }}.tar.gz
+  register: idp_jetty_base_tar_gz
+
+- name: get stats of /opt/jetty-base
+  stat:
+    path: /opt/jetty-base
+  register: jetty_base
+
+- name: unarchive jetty-base files
+  unarchive:
+    src: /root/idp-jetty-base-{{ jetty_base_ver }}.tar.gz
+    dest: /opt/
+    owner: root
+    group: root
+    remote_src: yes
+  when:
+    - idp_jetty_base_tar_gz.stat.exists
+    - not jetty_base.stat.exists
+
+- name: wait until /opt/jetty-base is present before continuing
+  wait_for:
+    path: /opt/jetty-base
+
+- name: ensure group "jetty"
+  group:
+    name: jetty
+    gid: 110
+
+- name: ensure user "jetty"
+  user:
+    name: jetty
+    uid: 110
+    group: jetty
+    home: /opt/jetty-base
+    shell: /sbin/nologin
+    comment: "Jetty daemon"
+
+- name: set permission /opt/jetty-base
+  file:
+    path: /opt/jetty-base
+    mode: g-w
+    recurse: yes
+
+- name: set permission /opt/jetty-base/logs
+  file:
+    path: /opt/jetty-base/logs
+    owner: jetty
+    group: jetty
+  when: jetty_base.stat.exists
+
+- name: set permission /opt/jetty-base/tmp
+  file:
+    path: /opt/jetty-base/tmp
+    owner: jetty
+    group: jetty
+  when: jetty_base.stat.exists
+
+- name: copy jetty
+  copy:
+    src: files/jetty
+    dest: /etc/sysconfig/jetty
+    owner: root
+    group: root
+    mode: '0644'
+
+- name: copy jetty.sh
+  copy:
+    src: /opt/jetty/bin/jetty.sh
+    dest: /etc/init.d/jetty
+    owner: root
+    group: root
+    mode: '0755'
+    remote_src: yes
+  when: jetty_distribution.stat.exists
+
+- name: copy jetty.service
+  copy:
+    src: files/jetty.service
+    dest: /etc/systemd/system/jetty.service
+    owner: root
+    group: root
+    mode: '0644'
+
+- name: copy idp.xml
+  copy:
+    src: files/idp.xml
+    dest: /opt/jetty-base/webapps/idp.xml
+    owner: root
+    group: root
+    mode: '0644'
+
+- name: remove idp-backchannel.ini
+  file:
+    path: /opt/jetty-base/start.d/idp-backchannel.ini
+    state: absent
+
+- name: copy start.ini
+  copy:
+    src: files/start.ini
+    dest: /opt/jetty-base/start.d/start.ini
+    owner: root
+    group: root
+    mode: '0644'
+
+- name: copy idp.mod
+  copy:
+    src: files/idp.mod
+    dest: /opt/jetty-base/modules/idp.mod
+    owner: root
+    group: root
+    mode: '0644'
+
+- name: copy idp.ini
+  copy:
+    src: files/idp.ini
+    dest: /opt/jetty-base/start.d/idp.ini
+    owner: root
+    group: root
+    mode: '0644'
+
+- name: copy idp-logging.ini
+  copy:
+    src: files/idp-logging.ini
+    dest: /opt/jetty-base/start.d/idp-logging.ini
+    owner: root
+    group: root
+    mode: '0644'
+
+- name: copy tweak-ssl.xml
+  copy:
+    src: files/tweak-ssl.xml
+    dest: /opt/jetty-base/etc/tweak-ssl.xml
+    owner: root
+    group: root
+    mode: '0644'
+
+- name: copy idp-backchannel.mod
+  copy:
+    src: files/idp-backchannel.mod
+    dest: /opt/jetty-base/modules/idp-backchannel.mod
+    owner: root
+    group: root
+    mode: '0644'
+
+- name: copy virtualhost-localhost80.conf
+  copy:
+    src: files/virtualhost-localhost80.conf
+    dest: /etc/httpd/conf.d/virtualhost-localhost80.conf
+    owner: root
+    group: root
+    mode: '0644'
+
+- name: download shibboleth-identity-provider-{{ shibbo_idp_ver }}.tar.gz
+  get_url:
+    url: http://shibboleth.net/downloads/identity-provider/latest/shibboleth-identity-provider-{{ shibbo_idp_ver }}.tar.gz
+    dest: /root/
+    checksum: sha256:{{ shibbo_idp_sha }}
+
+- name: get stats of /root/shibboleth-identity-provider-{{ shibbo_idp_ver }}.tar.gz
+  stat:
+    path: /root/shibboleth-identity-provider-{{ shibbo_idp_ver }}.tar.gz
+  register: shibboleth_identity_provider_tar_gz
+
+- name: get stats of /root/shibboleth-identity-provider-{{ shibbo_idp_ver }}
+  stat:
+    path: /root/shibboleth-identity-provider-{{ shibbo_idp_ver }}
+  register: shibboleth_identity_provider
+
+- name: unarchive shibboleth-identity-provider files
+  unarchive:
+    src: /root/shibboleth-identity-provider-{{ shibbo_idp_ver }}.tar.gz
+    dest: /root/
+    owner: root
+    group: root
+    remote_src: yes
+  when:
+    - shibboleth_identity_provider_tar_gz.stat.exists
+    - not shibboleth_identity_provider.stat.exists
+
+- name: wait until /root/shibboleth-identity-provider-{{ shibbo_idp_ver }} is present before continuing
+  wait_for:
+    path: /root/shibboleth-identity-provider-{{ shibbo_idp_ver }}
+
+- name: get stats of /opt/shibboleth-idp
+  stat:
+    path: /opt/shibboleth-idp
+  register: shibboleth_idp
+
+- name: install shibboleth-idp
+  shell: /root/shibboleth-identity-provider-{{ shibbo_idp_ver }}/bin/install.sh -Didp.conf.credentials.filemode=640 -Didp.conf.credentials.group=jetty -Didp.src.dir=/root/shibboleth-identity-provider-{{ shibbo_idp_ver }} -Didp.target.dir=/opt/shibboleth-idp -Didp.host.name={{ idp_host_name }} -Didp.entityID={{ idp_entity_id }} -Didp.scope={{ idp_scope }} -Didp.keystore.password={{ idp_keystore_pass }} -Didp.sealer.password={{ idp_sealer_pass }}
+  when: not shibboleth_idp.stat.exists
+
+- name: set permission /opt/shibboleth-idp/logs
+  file:
+    path: /opt/shibboleth-idp/logs
+    owner: jetty
+    group: jetty
+    recurse: yes
+  when: shibboleth_idp.stat.exists
+
+- name: set permission /opt/shibboleth-idp/metadata
+  file:
+    path: /opt/shibboleth-idp/metadata
+    group: jetty
+    mode: g+w
+  when: shibboleth_idp.stat.exists
+
+- name: set permission /opt/shibboleth-idp/metadata
+  file:
+    path: /opt/shibboleth-idp/metadata
+    mode: "+t"
+  when: shibboleth_idp.stat.exists
+
+- name: copy web.xml
+  copy:
+    src: files/web.xml
+    dest: /opt/shibboleth-idp/edit-webapp/WEB-INF/web.xml
+    owner: root
+    group: root
+    mode: '0644'
+
+- name: build shibboleth-idp
+  shell: /opt/shibboleth-idp/bin/build.sh -Didp.target.dir=/opt/shibboleth-idp
+
+- name: reread configs
+  systemd:
+    daemon_reload: yes
+
+- name: get stats of /etc/systemd/system/jetty.service
+  stat:
+    path: /etc/systemd/system/jetty.service
+  register: jetty_service
+
+- name: start and enable jetty
+  service:
+    name: jetty
+    state: started
+    enabled: yes
+  when: jetty_service.stat.exists

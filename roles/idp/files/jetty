@@ -1,0 +1,6 @@
+JAVA=/usr/lib/jvm/jre/bin/java
+JETTY_HOME=/opt/jetty
+JETTY_BASE=/opt/jetty-base
+JETTY_RUN=/opt/jetty-base/tmp
+JETTY_STATE=/opt/jetty-base/tmp/jetty.state
+JETTY_START_TIMEOUT=120

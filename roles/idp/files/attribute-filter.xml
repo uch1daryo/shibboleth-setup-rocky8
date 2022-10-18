@@ -1,0 +1,248 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    GakuNin/ConfigTemplate/attribute-filter-template-prodfed.xml
+    version 4.0.0
+
+    This file is a template provided by GakuNin.
+    Based on conf/attribute-filter.xml
+    in Shibboleth IdP 4.0.1 distribution.
+-->
+<!-- 
+    This file is an EXAMPLE policy file.  While the policy presented in this 
+    example file is illustrative of some simple cases, it relies on the names of
+    non-existent example services and the example attributes demonstrated in the
+    default attribute-resolver.xml file.
+
+    This example does contain some usable "general purpose" policies that may be
+    useful in conjunction with specific deployment choices, but those policies may
+    not be applicable to your specific needs or constraints.    
+-->
+<AttributeFilterPolicyGroup id="ShibbolethFilterPolicy"
+        xmlns="urn:mace:shibboleth:2.0:afp"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="urn:mace:shibboleth:2.0:afp http://shibboleth.net/schema/idp/shibboleth-afp.xsd">
+
+    <!-- Policy for attrviewer{20,13} -->
+    <!--
+    <AttributeFilterPolicy id="PolicyforAttrviewerSP">
+        <PolicyRequirementRule xsi:type="OR">
+            <Rule xsi:type="Requester" value="https://attrviewer20.gakunin.nii.ac.jp/shibboleth-sp" />
+            <Rule xsi:type="Requester" value="https://attrviewer13.gakunin.nii.ac.jp/shibboleth-sp" />
+        </PolicyRequirementRule>
+
+        <AttributeRule attributeID="o" permitAny="true" />
+
+        <AttributeRule attributeID="jao" permitAny="true" />
+
+        <AttributeRule attributeID="ou" permitAny="true" />
+
+        <AttributeRule attributeID="jaou" permitAny="true" />
+
+        <AttributeRule attributeID="eduPersonPrincipalName" permitAny="true" />
+
+        <AttributeRule attributeID="eduPersonTargetedID" permitAny="true" />
+
+        <AttributeRule attributeID="eduPersonAffiliation" permitAny="true" />
+
+        <AttributeRule attributeID="eduPersonScopedAffiliation" permitAny="true" />
+
+        <AttributeRule attributeID="eduPersonEntitlement" permitAny="true" />
+
+        <AttributeRule attributeID="sn" permitAny="true" />
+
+        <AttributeRule attributeID="jasn" permitAny="true" />
+
+        <AttributeRule attributeID="givenName" permitAny="true" />
+
+        <AttributeRule attributeID="jaGivenName" permitAny="true" />
+
+        <AttributeRule attributeID="displayName" permitAny="true" />
+
+        <AttributeRule attributeID="jaDisplayName" permitAny="true" />
+
+        <AttributeRule attributeID="mail" permitAny="true" />
+
+        <AttributeRule attributeID="gakuninScopedPersonalUniqueCode" permitAny="true" />
+
+        <AttributeRule attributeID="isMemberOf" permitAny="true" />
+
+        <AttributeRule attributeID="eduPersonAssurance" permitAny="true" />
+
+        <AttributeRule attributeID="eduPersonUniqueId" permitAny="true" />
+
+        <AttributeRule attributeID="eduPersonOrcid" permitAny="true" />
+    </AttributeFilterPolicy>
+    -->
+
+    <!-- Policy for CiNii -->
+    <!--
+    <AttributeFilterPolicy id="PolicyforCiNii">
+        <PolicyRequirementRule xsi:type="Requester" value="https://register-ci.nii.ac.jp/shibboleth-sp" />
+
+        <AttributeRule attributeID="jao" permitAny="true" />
+
+        <AttributeRule attributeID="eduPersonTargetedID" permitAny="true" />
+    </AttributeFilterPolicy>
+    -->
+
+    <!-- Policy for ScienceDirect and Scopus -->
+    <!--
+    <AttributeFilterPolicy id="PolicyforScienceDirectScopus">
+        <PolicyRequirementRule xsi:type="Requester" value="https://sdauth.sciencedirect.com/" />
+
+        <AttributeRule attributeID="eduPersonEntitlement">
+            <PermitValueRule xsi:type="Value" value="urn:mace:dir:entitlement:common-lib-terms" />
+        </AttributeRule>
+    </AttributeFilterPolicy>
+    -->
+
+    <!-- Policy for Web of Knowledge -->
+    <!--
+    <AttributeFilterPolicy id="PolicyforWebofKnowledge">
+        <PolicyRequirementRule xsi:type="Requester" value="https://sp.tshhosting.com/shibboleth" />
+
+        <AttributeRule attributeID="eduPersonScopedAffiliation" permitAny="true" />
+    </AttributeFilterPolicy>
+    -->
+
+    <!-- Policy for Ovid -->
+    <!--
+    <AttributeFilterPolicy id="PolicyforOvid">
+        <PolicyRequirementRule xsi:type="Requester" value="https://shibboleth.ovid.com/entity" />
+
+        <AttributeRule attributeID="eduPersonScopedAffiliation" permitAny="true" />
+    </AttributeFilterPolicy>
+    -->
+
+    <!-- Policy for SpringerLink -->
+    <!--
+    <AttributeFilterPolicy id="PolicyforSpringerLink">
+        <PolicyRequirementRule xsi:type="Requester" value="https://fsso.springer.com" />
+
+    </AttributeFilterPolicy>
+    -->
+
+    <!-- Policy for Metapress -->
+    <!--
+    <AttributeFilterPolicy id="PolicyforMetapress">
+        <PolicyRequirementRule xsi:type="Requester" value="http://shibboleth.metapress.com/shibboleth-sp" />
+    </AttributeFilterPolicy>
+    -->
+
+    <!-- Policy for Microsoft Academic Verification Engine (DreamSpark) -->
+    <!--
+    <AttributeFilterPolicy id="PolicyforDreamspark">
+        <PolicyRequirementRule xsi:type="Requester" value="https://shibboleth.msacademicverify.com/shibboleth-sp" />
+
+        <AttributeRule attributeID="eduPersonTargetedID" permitAny="true" />
+    </AttributeFilterPolicy>
+    -->
+
+    <!-- Policy for RefWorks -->
+    <!--
+    <AttributeFilterPolicy id="PolicyforRefWorks">
+        <PolicyRequirementRule xsi:type="Requester" value="https://www.refworks.com/shibboleth/sp" />
+
+        <AttributeRule attributeID="eduPersonTargetedID" permitAny="true" />
+    </AttributeFilterPolicy>
+    -->
+
+    <!-- Policy for CUP -->
+    <!--
+    <AttributeFilterPolicy id="PolicyforCUP">
+        <PolicyRequirementRule xsi:type="Requester" value="https://shibboleth.cambridge.org/shibboleth-sp" />
+
+        <AttributeRule attributeID="eduPersonScopedAffiliation" permitAny="true" />
+    </AttributeFilterPolicy>
+    -->
+
+    <!-- Policy for Atlases -->
+    <!--
+    <AttributeFilterPolicy id="PolicyforAtlases">
+        <PolicyRequirementRule xsi:type="Requester" value="https://atlases.muni.cz/shibboleth" />
+
+        <AttributeRule attributeID="eduPersonTargetedID" permitAny="true" />
+    </AttributeFilterPolicy>
+    -->
+
+    <!-- Policy for FaMCUs -->
+    <!--
+    <AttributeFilterPolicy id="PolicyforFaMCUs">
+        <PolicyRequirementRule xsi:type="Requester" value="https://mcus.nii.ac.jp/shibboleth-sp" />
+
+        <AttributeRule attributeID="eduPersonTargetedID" permitAny="true" />
+
+        <AttributeRule attributeID="eduPersonAffiliation" permitAny="true" />
+    </AttributeFilterPolicy>
+    -->
+
+    <!-- Policy for HINET wlan guest service -->
+    <!--
+    <AttributeFilterPolicy id="PolicyforHINETwlanguestservice">
+        <PolicyRequirementRule xsi:type="Requester" value="https://hinet-sp.hiroshima-u.ac.jp/shibboleth-sp" />
+
+        <AttributeRule attributeID="eduPersonPrincipalName" permitAny="true" />
+    </AttributeFilterPolicy>
+    -->
+
+    <!-- Policy for Opengate -->
+    <!--
+    <AttributeFilterPolicy id="PolicyforOpengate">
+        <PolicyRequirementRule xsi:type="Requester" value="https://guestog.sso.cc.saga-u.ac.jp/shibboleth-sp" />
+
+        <AttributeRule attributeID="eduPersonPrincipalName" permitAny="true" />
+    </AttributeFilterPolicy>
+    -->
+
+    <!-- Policy for Kanazawa SP1 -->
+    <!--
+    <AttributeFilterPolicy id="PolicyforKanazawaSP1">
+        <PolicyRequirementRule xsi:type="Requester" value="https://sp1.db.kanazawa-u.ac.jp/shibboleth-sp" />
+
+        <AttributeRule attributeID="eduPersonPrincipalName" permitAny="true" />
+
+        <AttributeRule attributeID="eduPersonScopedAffiliation" permitAny="true" />
+    </AttributeFilterPolicy>
+    -->
+
+    <!-- Policy for Communications service for sharing academic information -->
+    <!--
+    <AttributeFilterPolicy id="PolicyforC-YZ-YAMAGATA_U">
+        <PolicyRequirementRule xsi:type="Requester" value="https://c.yz.yamagata-u.ac.jp/shibboleth-sp" />
+
+        <AttributeRule attributeID="eduPersonPrincipalName" permitAny="true" />
+    </AttributeFilterPolicy>
+    -->
+
+    <!-- Policy for Future Medicine -->
+    <!--
+    <AttributeFilterPolicy id="PolicyforFutureMedicine">
+        <PolicyRequirementRule xsi:type="Requester" value="https://www.futuremedicine.com/shibboleth" />
+
+        <AttributeRule attributeID="eduPersonEntitlement">
+            <PermitValueRule xsi:type="Value" value="urn:mace:dir:entitlement:common-lib-terms" />
+        </AttributeRule>
+    </AttributeFilterPolicy>
+    -->
+
+    <!-- Policy for Future Science -->
+    <!--
+    <AttributeFilterPolicy id="PolicyforFutureScience">
+        <PolicyRequirementRule xsi:type="Requester" value="https://www.future-science.com/shibboleth" />
+
+        <AttributeRule attributeID="eduPersonEntitlement">
+            <PermitValueRule xsi:type="Value" value="urn:mace:dir:entitlement:common-lib-terms" />
+        </AttributeRule>
+    </AttributeFilterPolicy>
+    -->
+
+    <!-- Policy for Georg Thieme Verlag KG  -->
+    <!--
+    <AttributeFilterPolicy id="PolicyforGeorgThiemeVerlagKG">
+        <PolicyRequirementRule xsi:type="Requester" value="https://prd.thieme.de/shibboleth-sp" />
+
+        <AttributeRule attributeID="eduPersonScopedAffiliation" permitAny="true" />
+    </AttributeFilterPolicy>
+    -->
+
+</AttributeFilterPolicyGroup>

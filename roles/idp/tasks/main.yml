@@ -1,0 +1,5 @@
+---
+- include_tasks: letsencrypt_configure.yml
+- include_tasks: shibboleth_idp_install.yml
+- include_tasks: shibboleth_idp_backup.yml
+- include_tasks: shibboleth_idp_configure.yml

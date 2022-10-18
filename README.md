@@ -50,6 +50,11 @@ sudo vim /var/www/html/sp-metadata.xml
 
 IdP server as well.
 
+```bash
+sudo cat /opt/shibboleth-idp/credentials/idp-signing.crt
+sudo vim /var/www/html/idp-metadata.xml
+```
+
 ### share metadata and restart service
 
 download idp-metadata.xml as partner-metadata.xml on SP server, restart service.
@@ -96,3 +101,5 @@ access `https://sp.example.com/secure/` and authenticate.
 - [certbot instructions - Apache on CentOS 8](https://certbot.eff.org/instructions?ws=apache&os=centosrhel8)
 
 - [Service Provider 3 / General Topics / keygen](https://shibboleth.atlassian.net/wiki/spaces/SP3/pages/2067398706/keygen)
+
+- [Ansibleを利用したshibboleth idp + jetty + apache httpdインストール](https://tech-lab.sios.jp/archives/27088)

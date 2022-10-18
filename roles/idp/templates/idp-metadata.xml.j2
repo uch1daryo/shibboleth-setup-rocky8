@@ -1,0 +1,83 @@
+<!-- IdP: Your Organization Name, Your IdP Site URL, Date -->
+<EntityDescriptor xmlns="urn:oasis:names:tc:SAML:2.0:metadata" entityID="{{ idp_entity_id }}">
+  <IDPSSODescriptor protocolSupportEnumeration="urn:oasis:names:tc:SAML:1.1:protocol urn:mace:shibboleth:1.0 urn:oasis:names:tc:SAML:2.0:protocol">
+    <Extensions>
+      <shibmd:Scope xmlns:shibmd="urn:mace:shibboleth:metadata:1.0" regexp="false">{{ idp_scope }}</shibmd:Scope>
+      <mdui:UIInfo xmlns:mdui="urn:oasis:names:tc:SAML:metadata:ui">
+        <mdui:DisplayName xml:lang="ja">{{ idp_display_name_ja }}</mdui:DisplayName>
+        <mdui:DisplayName xml:lang="en">{{ idp_display_name_en }}</mdui:DisplayName>
+        <mdui:Logo height="50" width="50">{{ idp_logo_url }}</mdui:Logo>
+        <mdui:InformationURL xml:lang="ja">{{ idp_info_url_ja }}</mdui:InformationURL>
+        <mdui:InformationURL xml:lang="en">{{ idp_info_url_en }}</mdui:InformationURL>
+        <mdui:PrivacyStatementURL xml:lang="ja">{{ idp_privacy_url_ja }}</mdui:PrivacyStatementURL>
+        <mdui:PrivacyStatementURL xml:lang="en">{{ idp_privacy_url_en }}</mdui:PrivacyStatementURL>
+        <mdui:Keywords xml:lang="en">category:location:others category:organizationType:others</mdui:Keywords>
+      </mdui:UIInfo>
+      <mdui:DiscoHints xmlns:mdui="urn:oasis:names:tc:SAML:metadata:ui">
+        <mdui:IPHint>{{ idp_ip_hint }}</mdui:IPHint>
+        <mdui:DomainHint>{{ idp_domain_hint }}</mdui:DomainHint>
+        <mdui:GeolocationHint>geo:35.6924668,139.75810019999994</mdui:GeolocationHint>
+      </mdui:DiscoHints>
+    </Extensions>
+    <KeyDescriptor>
+      <ds:KeyInfo xmlns:ds="http://www.w3.org/2000/09/xmldsig#">
+        <ds:X509Data>
+          <ds:X509Certificate>
+MIIFITCCBAmgAwIBAgIIBpAaVBrt6kMwDQYJKoZIhvcNAQEFBQAwfTELMAkGA1UE
+BhMCSlAxETAPBgNVBAcTCEFjYWRlbWUyMSowKAYDVQQKEyFOYXRpb25hbCBJbnN0
+aXR1dGUgb2YgSW5mb3JtYXRpY3MxDTALBgNVBAsTBFVQS0kxIDAeBgNVBAsTF05J
+                     *******************
+                     *******************
+                     *******************
+kBFfvNBdrux4CkIsKhpYQXCAIEuy12CFZUXEtHB5XxeBkntbs2lfP/rWbg2J1Ige
+zZc6shCn3VdrL2douVFjaAXlc8zwys/KIpLzNSxOOGwJdKxFTaIzH/emcqKj93Jd
+DC1rrFMhoPE=
+          </ds:X509Certificate>
+        </ds:X509Data>
+      </ds:KeyInfo>
+    </KeyDescriptor>
+    <NameIDFormat>urn:mace:shibboleth:1.0:nameIdentifier</NameIDFormat>
+    <NameIDFormat>urn:oasis:names:tc:SAML:2.0:nameid-format:transient</NameIDFormat>
+    <SingleSignOnService Location="https://{{ idp_host_name }}/idp/profile/Shibboleth/SSO" Binding="urn:mace:shibboleth:1.0:profiles:AuthnRequest"/>
+    <SingleSignOnService Location="https://{{ idp_host_name }}/idp/profile/SAML2/POST/SSO" Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST"/>
+    <SingleSignOnService Location="https://{{ idp_host_name }}/idp/profile/SAML2/Redirect/SSO" Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect"/>
+  </IDPSSODescriptor>
+  <AttributeAuthorityDescriptor protocolSupportEnumeration="urn:oasis:names:tc:SAML:1.1:protocol urn:oasis:names:tc:SAML:2.0:protocol">
+    <Extensions>
+      <shibmd:Scope xmlns:shibmd="urn:mace:shibboleth:metadata:1.0" regexp="false">YourScope.ac.jp</shibmd:Scope>
+    </Extensions>
+    <KeyDescriptor>
+      <ds:KeyInfo xmlns:ds="http://www.w3.org/2000/09/xmldsig#">
+        <ds:X509Data>
+          <ds:X509Certificate>
+MIIFITCCBAmgAwIBAgIIBpAaVBrt6kMwDQYJKoZIhvcNAQEFBQAwfTELMAkGA1UE
+BhMCSlAxETAPBgNVBAcTCEFjYWRlbWUyMSowKAYDVQQKEyFOYXRpb25hbCBJbnN0
+aXR1dGUgb2YgSW5mb3JtYXRpY3MxDTALBgNVBAsTBFVQS0kxIDAeBgNVBAsTF05J
+                     *******************
+                     *******************
+                     *******************
+kBFfvNBdrux4CkIsKhpYQXCAIEuy12CFZUXEtHB5XxeBkntbs2lfP/rWbg2J1Ige
+zZc6shCn3VdrL2douVFjaAXlc8zwys/KIpLzNSxOOGwJdKxFTaIzH/emcqKj93Jd
+DC1rrFMhoPE=
+          </ds:X509Certificate>
+        </ds:X509Data>
+      </ds:KeyInfo>
+    </KeyDescriptor>
+    <AttributeService Location="https://{{ idp_host_name }}:8443/idp/profile/SAML1/SOAP/AttributeQuery" Binding="urn:oasis:names:tc:SAML:1.0:bindings:SOAP-binding"/>
+    <AttributeService Location="https://{{ idp_host_name }}:8443/idp/profile/SAML2/SOAP/AttributeQuery" Binding="urn:oasis:names:tc:SAML:2.0:bindings:SOAP"/>
+    <NameIDFormat>urn:mace:shibboleth:1.0:nameIdentifier</NameIDFormat>
+    <NameIDFormat>urn:oasis:names:tc:SAML:2.0:nameid-format:transient</NameIDFormat>
+  </AttributeAuthorityDescriptor>
+  <Organization>
+    <OrganizationName xml:lang="en">{{ idp_organization_name_en }}</OrganizationName>
+    <OrganizationName xml:lang="ja">{{ idp_organization_name_ja }}</OrganizationName>
+    <OrganizationDisplayName xml:lang="en">{{ idp_organization_display_name_en }}</OrganizationDisplayName>
+    <OrganizationDisplayName xml:lang="ja">{{ idp_organization_display_name_ja }}</OrganizationDisplayName>
+    <OrganizationURL xml:lang="en">{{ idp_organization_url }}</OrganizationURL>
+  </Organization>
+  <ContactPerson contactType="technical">
+    <GivenName>{{ idp_contact_person_given_name }}</GivenName>
+    <SurName>{{ idp_contact_person_sur_name }}</SurName>
+    <EmailAddress>mailto:{{ idp_contact_person_email_address }}</EmailAddress>
+  </ContactPerson>
+</EntityDescriptor>

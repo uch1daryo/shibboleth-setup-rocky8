@@ -1,0 +1,94 @@
+---
+- name: template to /opt/shibboleth-idp/conf/metadata-providers.xml
+  template:
+    src: templates/metadata-providers.xml.j2
+    dest: /opt/shibboleth-idp/conf/metadata-providers.xml
+    owner: root
+    group: root
+    mode: '0644'
+  notify: "restart jetty"
+
+- name: template to /opt/shibboleth-idp/conf/idp.properties
+  template:
+    src: templates/idp.properties.j2
+    dest: /opt/shibboleth-idp/conf/idp.properties
+    owner: root
+    group: root
+    mode: '0644'
+  notify: "restart jetty"
+
+- name: template to /opt/shibboleth-idp/conf/ldap.properties
+  template:
+    src: templates/ldap.properties.j2
+    dest: /opt/shibboleth-idp/conf/ldap.properties
+    owner: root
+    group: root
+    mode: '0644'
+  notify: "restart jetty"
+
+- name: copy saml-nameid.properties
+  copy:
+    src: files/saml-nameid.properties
+    dest: /opt/shibboleth-idp/conf/saml-nameid.properties
+    owner: root
+    group: root
+    mode: '0644'
+  notify: "restart jetty"
+
+- name: template to /opt/shibboleth-idp/credentials/secrets.properties
+  template:
+    src: templates/secrets.properties.j2
+    dest: /opt/shibboleth-idp/credentials/secrets.properties
+    owner: root
+    group: jetty
+    mode: '0644'
+  notify: "restart jetty"
+
+- name: copy attribute-resolver.xml
+  copy:
+    src: files/attribute-resolver.xml
+    dest: /opt/shibboleth-idp/conf/attribute-resolver.xml
+    owner: root
+    group: root
+    mode: '0644'
+  notify: "restart jetty"
+
+- name: copy attribute-filter.xml
+  copy:
+    src: files/attribute-filter.xml
+    dest: /opt/shibboleth-idp/conf/attribute-filter.xml
+    owner: root
+    group: root
+    mode: '0644'
+  notify: "restart jetty"
+
+- name: enable intercept consent
+  shell: /opt/shibboleth-idp/bin/module.sh -t idp.intercept.Consent || /opt/shibboleth-idp/bin/module.sh -e idp.intercept.Consent
+
+- name: copy relying-party.xml
+  copy:
+    src: files/relying-party.xml
+    dest: /opt/shibboleth-idp/conf/relying-party.xml
+    owner: root
+    group: root
+    mode: '0644'
+  notify: "restart jetty"
+
+- name: get stats of /var/www/html/idp-metadata.xml
+  stat:
+    path: /var/www/html/idp-metadata.xml
+  register: idp_metadata
+
+- name: template to /var/www/html/idp-metadata.xml
+  template:
+    src: templates/idp-metadata.xml.j2
+    dest: /var/www/html/idp-metadata.xml
+    owner: root
+    group: root
+    mode: '0644'
+  when: not idp_metadata.stat.exists
+
+- name: get stats of /etc/systemd/system/jetty.service
+  stat:
+    path: /etc/systemd/system/jetty.service
+  register: jetty_service

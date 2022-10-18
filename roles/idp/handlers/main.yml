@@ -1,0 +1,14 @@
+---
+- name: reload httpd
+  service:
+    name: httpd
+    state: reloaded
+  listen: "reload httpd"
+  when: "'httpd' in ansible_facts.packages"
+
+- name: restart jetty
+  service:
+    name: jetty
+    state: restarted
+  listen: "restart jetty"
+  when: jetty_service.stat.exists

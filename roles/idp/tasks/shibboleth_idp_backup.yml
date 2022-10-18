@@ -1,0 +1,149 @@
+---
+- name: get stats of /opt/shibboleth-idp
+  stat:
+    path: /opt/shibboleth-idp
+  register: shibboleth_idp
+
+- name: get stats of metadata-providers.xml.dist
+  stat:
+    path: /opt/shibboleth-idp/conf/metadata-providers.xml.dist
+  register: metadata_providers_xml_dist
+
+- name: backup original metadata-providers.xml
+  copy:
+    src: /opt/shibboleth-idp/conf/metadata-providers.xml
+    dest: /opt/shibboleth-idp/conf/metadata-providers.xml.dist
+    owner: root
+    group: root
+    mode: '0444'
+    backup: yes
+    remote_src: yes
+  when:
+    - not metadata_providers_xml_dist.stat.exists
+    - shibboleth_idp.stat.exists
+
+- name: get stats of idp.properties.dist
+  stat:
+    path: /opt/shibboleth-idp/conf/idp.properties.dist
+  register: idp_properties_dist
+
+- name: backup original idp.properties
+  copy:
+    src: /opt/shibboleth-idp/conf/idp.properties
+    dest: /opt/shibboleth-idp/conf/idp.properties.dist
+    owner: root
+    group: root
+    mode: '0444'
+    backup: yes
+    remote_src: yes
+  when:
+    - not idp_properties_dist.stat.exists
+    - shibboleth_idp.stat.exists
+
+- name: get stats of ldap.properties.dist
+  stat:
+    path: /opt/shibboleth-idp/conf/ldap.properties.dist
+  register: ldap_properties_dist
+
+- name: backup original ldap.properties
+  copy:
+    src: /opt/shibboleth-idp/conf/ldap.properties
+    dest: /opt/shibboleth-idp/conf/ldap.properties.dist
+    owner: root
+    group: root
+    mode: '0444'
+    backup: yes
+    remote_src: yes
+  when:
+    - not ldap_properties_dist.stat.exists
+    - shibboleth_idp.stat.exists
+
+- name: get stats of saml-nameid.properties.dist
+  stat:
+    path: /opt/shibboleth-idp/conf/saml-nameid.properties.dist
+  register: saml_nameid_properties_dist
+
+- name: backup original saml-nameid.properties
+  copy:
+    src: /opt/shibboleth-idp/conf/saml-nameid.properties
+    dest: /opt/shibboleth-idp/conf/saml-nameid.properties.dist
+    owner: root
+    group: root
+    mode: '0444'
+    backup: yes
+    remote_src: yes
+  when:
+    - not saml_nameid_properties_dist.stat.exists
+    - shibboleth_idp.stat.exists
+
+- name: get stats of secrets.properties.dist
+  stat:
+    path: /opt/shibboleth-idp/credentials/secrets.properties.dist
+  register: secrets_properties_dist
+
+- name: backup original secrets.properties
+  copy:
+    src: /opt/shibboleth-idp/credentials/secrets.properties
+    dest: /opt/shibboleth-idp/credentials/secrets.properties.dist
+    owner: root
+    group: jetty
+    mode: '0440'
+    backup: yes
+    remote_src: yes
+  when:
+    - not secrets_properties_dist.stat.exists
+    - shibboleth_idp.stat.exists
+
+- name: get stats of attribute-resolver.xml.dist
+  stat:
+    path: /opt/shibboleth-idp/conf/attribute-resolver.xml.dist
+  register: attribute_resolver_xml_dist
+
+- name: backup original attribute-resolver.xml
+  copy:
+    src: /opt/shibboleth-idp/conf/attribute-resolver.xml
+    dest: /opt/shibboleth-idp/conf/attribute-resolver.xml.dist
+    owner: root
+    group: root
+    mode: '0444'
+    backup: yes
+    remote_src: yes
+  when:
+    - not attribute_resolver_xml_dist.stat.exists
+    - shibboleth_idp.stat.exists
+
+- name: get stats of attribute-filter.xml.dist
+  stat:
+    path: /opt/shibboleth-idp/conf/attribute-filter.xml.dist
+  register: attribute_filter_xml_dist
+
+- name: backup original attribute-filter.xml
+  copy:
+    src: /opt/shibboleth-idp/conf/attribute-filter.xml
+    dest: /opt/shibboleth-idp/conf/attribute-filter.xml.dist
+    owner: root
+    group: root
+    mode: '0444'
+    backup: yes
+    remote_src: yes
+  when:
+    - not attribute_filter_xml_dist.stat.exists
+    - shibboleth_idp.stat.exists
+
+- name: get stats of relying-party.xml.dist
+  stat:
+    path: /opt/shibboleth-idp/conf/relying-party.xml.dist
+  register: relying_party_xml_dist
+
+- name: backup original relying-party.xml
+  copy:
+    src: /opt/shibboleth-idp/conf/relying-party.xml
+    dest: /opt/shibboleth-idp/conf/relying-party.xml.dist
+    owner: root
+    group: root
+    mode: '0444'
+    backup: yes
+    remote_src: yes
+  when:
+    - not relying_party_xml_dist.stat.exists
+    - shibboleth_idp.stat.exists
